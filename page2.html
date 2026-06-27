@@ -49,46 +49,43 @@
             border-color: #0070f3;
         }
 
-        /* The Domino Container (Different color for Page 2!) */
-        .domino {
+        /* Container focused on your side of the field */
+        .focus-container {
             width: 100%;
             max-width: 400px;
             height: 80vh; 
-            background-color: #1c2d42; /* Dark Blue Theme */
+            background-color: #1c2d42; /* Dark Blue Focus Theme */
             border: 6px solid #fff;
             border-radius: 24px;
             display: flex;
             flex-direction: column;
-            position: relative;
+            justify-content: space-between; /* Distributes top, middle, and bottom evenly */
+            padding: 25px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        .domino::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 5%;
-            right: 5%;
-            height: 6px;
-            background-color: #fff;
-            transform: translateY(-50%);
-            border-radius: 3px;
+        /* --- TOP SECTION: Life Tracker --- */
+        .life-section {
+            text-align: center;
         }
 
-        .domino-half {
-            flex: 1;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 20px;
-            padding: 30px;
-            align-items: center;
-            justify-items: center;
+        .life-title {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .life-pips {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
         }
 
         .pip {
-            width: 65px;
-            height: 65px;
+            width: 45px; /* Slightly smaller to fit 5 comfortably side-by-side */
+            height: 45px;
             border-radius: 50%;
             background-color: #fff;
             border: 3px solid #fff;
@@ -101,25 +98,76 @@
         }
 
         .pip:active {
-            transform: scale(0.92);
+            transform: scale(0.9);
         }
 
-        .input-square {
-            width: 65px;
-            height: 65px;
+        /* --- MIDDLE SECTION: Stacked Squares --- */
+        .squares-section {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .square-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Space between the large and small square */
+        }
+
+        .input-large {
+            width: 75px;
+            height: 75px;
             border: 3px solid #fff;
             background-color: transparent;
             color: #fff;
             border-radius: 8px;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             outline: none;
         }
 
-        .input-square:focus {
+        .input-small {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            outline: none;
+        }
+
+        .input-large:focus, .input-small:focus {
             border-color: #0070f3;
             background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- BOTTOM SECTION: Dropdown --- */
+        .dropdown-section {
+            width: 100%;
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: 3px solid #fff;
+            border-radius: 12px;
+            background-color: #1c2d42;
+            color: #fff;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .custom-select:focus {
+            border-color: #0070f3;
         }
     </style>
 </head>
@@ -130,27 +178,43 @@
         <a href="page2.html" class="nav-btn active">Page 2</a>
     </div>
 
-    <div class="domino">
-        <div class="domino-half" id="top-half">
-            <input type="text" class="input-square" maxlength="2">
-            <input type="text" class="input-square" maxlength="2">
-            <div class="pip" onclick="togglePip(this)"></div>
-            <div class="pip" onclick="togglePip(this)"></div>
-            <div class="pip" onclick="togglePip(this)"></div>
-            <div class="pip" onclick="togglePip(this)"></div>
+    <div class="focus-container">
+        
+        <div class="life-section">
+            <div class="life-title">Life</div>
+            <div class="life-pips">
+                <div class="pip" onclick="togglePip(this)"></div>
+                <div class="pip" onclick="togglePip(this)"></div>
+                <div class="pip" onclick="togglePip(this)"></div>
+                <div class="pip" onclick="togglePip(this)"></div>
+                <div class="pip" onclick="togglePip(this)"></div>
+            </div>
         </div>
 
-        <div class="domino-half" id="bottom-half">
-            <div class="pip" onclick="togglePip(this)"></div>
-            <div class="pip" onclick="togglePip(this)"></div>
-            <div class="pip" onclick="togglePip(this)"></div>
-            <div class="pip" onclick="togglePip(this)"></div>
-            <input type="text" class="input-square" maxlength="2">
-            <input type="text" class="input-square" maxlength="2">
+        <div class="squares-section">
+            <div class="square-stack">
+                <input type="text" class="input-large" maxlength="2">
+                <input type="text" class="input-small" maxlength="2">
+            </div>
+            <div class="square-stack">
+                <input type="text" class="input-large" maxlength="2">
+                <input type="text" class="input-small" maxlength="2">
+            </div>
         </div>
+
+        <div class="dropdown-section">
+            <select class="custom-select">
+                <option value="" disabled selected>Select Option...</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+
     </div>
 
     <script>
+        // Reuses the identical logic from Page 1 to handle circle tapping
         function togglePip(element) {
             element.classList.toggle('black');
         }
